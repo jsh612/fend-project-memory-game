@@ -25,12 +25,15 @@ function shuffle(array) {
     return array;
 }
 
-//mathcing card event
-const allCards = document.querySelectorAll('.card');
+//matching card event
+const deck = document.querySelector('.deck');
 let openCardsArr = [];
+let matchingNum = 0;
 
-allCards.forEach(card => {
-    card.addEventListener('click', () => {
+deck.addEventListener('click', e => {
+    console.log('target',e.target.className);
+    if (e.target.className === 'card') {
+        let card = e.target;
         if (openCardsArr.length < 2) {
             card.classList.add('open', 'show');
             openCardsArr.push(card);
@@ -38,17 +41,20 @@ allCards.forEach(card => {
                 setTimeout(() => {
                     if (openCardsArr[0].firstElementChild.className !== openCardsArr[1].firstElementChild.className) {
                         openCardsArr.forEach(card => card.classList.remove('open', 'show'));
+                    }else {
+                        matchingNum ++
+                        console.log(matchingNum)
                     }
                     openCardsArr = []
                 }, 1000);
             }
         }
-    })
-})
-
+    }
+});
 
 //shuffle&repeat event
 const shuffleButton = document.querySelector('.fa-repeat');
+const allCards = document.querySelectorAll('.card');
 
 shuffleButton.addEventListener('click', () => {
     let classNameShuffleArr = [];
