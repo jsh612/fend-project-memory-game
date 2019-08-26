@@ -27,23 +27,28 @@ function shuffle(array) {
 
 //matching card event
 const deck = document.querySelector('.deck');
+const moves = document.querySelector('.moves');
+const stars = document.querySelector('.stars');
+
+moves.innerHTML = 0;
 let openCardsArr = [];
 let matchingNum = 0;
 
 deck.addEventListener('click', e => {
-    console.log('target',e.target.className);
     if (e.target.className === 'card') {
         let card = e.target;
         if (openCardsArr.length < 2) {
             card.classList.add('open', 'show');
             openCardsArr.push(card);
             if (openCardsArr.length === 2) {
+                moves.innerHTML ++
                 setTimeout(() => {
                     if (openCardsArr[0].firstElementChild.className !== openCardsArr[1].firstElementChild.className) {
                         openCardsArr.forEach(card => card.classList.remove('open', 'show'));
-                    }else {
-                        matchingNum ++
-                        console.log(matchingNum)
+                    }
+                    matchingNum ++
+                    if (matchingNum%7 === 0) {
+                        stars.removeChild(stars.children[0])
                     }
                     openCardsArr = []
                 }, 1000);
