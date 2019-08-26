@@ -114,3 +114,34 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+/*
+ * Ending Page
+ */
+
+ .end-page {
+    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+    height: 100%;
+    width: 50%;
+    text-align: center;
+    display: none;
+ }
+
+ .display-none {
+     display: none;
+ }
+
+ .end-page-text {
+     padding: 5%;
+     text-align: center;
+ }
+
+ .end-page-text h1 {
+     font-size: 50px;
+ }
+
+ .re-game-btn {
+     font-size: 2em;
+     width: 70%;
+     height: 5%;
+ }

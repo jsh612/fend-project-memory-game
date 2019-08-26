@@ -26,10 +26,14 @@ function shuffle(array) {
 }
 
 //
+//
 //timer
 //
+//
+
 const startButton = document.querySelector('#start-button')
 let startOnOff = 'off'
+let timerId;
 let time = 0;
 
 function leadingZero(num) {
@@ -44,7 +48,7 @@ function timeChecker() {
     startOnOff = "on"
     let timeSec;
     let timeMin;
-    let timerId = setInterval(() => {
+    timerId = setInterval(() => {
         time++
         timeMin = parseInt(time/60);
         timeSec = leadingZero(time%60);
@@ -57,8 +61,39 @@ startButton.addEventListener('click', timeChecker);
 
 
 //
+//
+//end-page display
+//
+//
+
+const endPage = document.querySelector('.end-page');
+
+function reStart() {
+    container.style.display = 'flex';
+    endPage.style.display = 'none';
+    repeatEventFunc();
+}
+
+function endGame(moves, star) {
+    endPage.innerHTML = `
+    <div class="end-container">
+        <img src="./img/thumb-up.png" height="200px" alt="thumb-up">
+        <div class="end-page-text"><h1>move counter: ${moves}</h1></div>
+        <div class="end-page-text"><h1>Time: ${timer.innerHTML}</h1></div>
+        <div class="end-page-text"><h1>Star rating: ${star}</h1></div>
+        <button class="re-game-btn">RE-GAME</button>
+    </div>
+    `
+    document.querySelector('.re-game-btn').addEventListener('click', reStart);
+}
+
+//
+//
 //matching card event
 //
+//
+
+const container = document.querySelector('.container')
 const deck = document.querySelector('.deck');
 const moves = document.querySelector('.moves');
 const stars = document.querySelector('.stars');
@@ -79,12 +114,20 @@ deck.addEventListener('click', e => {
                     setTimeout(() => {
                         if (openCardsArr[0].firstElementChild.className !== openCardsArr[1].firstElementChild.className) {
                             openCardsArr.forEach(card => card.classList.remove('open', 'show'));
+                        }else {
+                            matchingNum ++
                         }
-                        matchingNum ++
                         if (matchingNum%7 === 0) {
                             stars.removeChild(stars.children[0]);
                         }
                         openCardsArr = [];
+                        console.log("맞은개수",matchingNum);
+                        if (matchingNum === 8) {
+                            clearInterval(timerId);
+                            endGame(moves.innerHTML, stars.children.length );
+                            container.style.display = 'none';
+                            endPage.style.display = 'block';
+                        }
                     }, 1000);
                 }
             }
@@ -94,14 +137,16 @@ deck.addEventListener('click', e => {
     }
 });
 
-
+//
 //
 //shuffle&repeat event
 //
+//
+
 const repeat = document.querySelector('.fa-repeat');
 const allCards = document.querySelectorAll('.card');
 
-repeat.addEventListener('click', () => {
+function repeatEventFunc() {
     let classNameShuffleArr = [];
     allCards.forEach(card => {
         classNameShuffleArr.push(card.firstElementChild.className);
@@ -113,7 +158,9 @@ repeat.addEventListener('click', () => {
     }
     time = 0;
     timer.innerHTML = `00 : 00`
-});
+}
+
+repeat.addEventListener('click', repeatEventFunc);
 
 
 
