@@ -25,11 +25,12 @@ function shuffle(array) {
     return array;
 }
 
+//mathcing card event
 const allCards = document.querySelectorAll('.card');
 let openCardsArr = [];
 
 allCards.forEach(card => {
-    card.addEventListener('click', e => {
+    card.addEventListener('click', () => {
         if (openCardsArr.length < 2) {
             card.classList.add('open', 'show');
             openCardsArr.push(card);
@@ -44,6 +45,26 @@ allCards.forEach(card => {
         }
     })
 })
+
+
+//shuffle&repeat event
+const shuffleButton = document.querySelector('.fa-repeat');
+
+shuffleButton.addEventListener('click', () => {
+    let classNameShuffleArr = [];
+    allCards.forEach(card => {
+        classNameShuffleArr.push(card.firstElementChild.className);
+        card.classList.remove('open', 'show');
+    });
+    classNameShuffleArr = shuffle(classNameShuffleArr);
+    for (let i=0; i<allCards.length; i++) {
+        allCards[i].firstElementChild.className = classNameShuffleArr[i];
+    }
+});
+
+
+
+
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
