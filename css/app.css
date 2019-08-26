@@ -33,6 +33,13 @@ h1 {
     font-weight: 300;
 }
 
+#start-button {
+    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+    color: #ffffff;
+    font-style: bold;
+    border: solid 5px black;
+}
+
 /*
  * Styles for the deck of cards
  */
