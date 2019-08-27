@@ -37,13 +37,11 @@ let timerId;
 let time = 0;
 
 function leadingZero(num) {
-    if (num < 10) {
-        num = '0' + num;
-    }
-    return num;
+    return num < 10 ? '0' + num : num;
 }
 
 const timer = document.querySelector('.timer');
+
 function timeChecker() {
     startOnOff = "on";
     let timeSec;
@@ -76,16 +74,15 @@ function reStart() {
 }
 
 function endGame(moves) {
-    const star = 3 - parseInt(moves/7);
-    endPage.innerHTML = `
-    <div class="end-container">
-        <img src="./img/thumb-up.png" height="200px" alt="thumb-up">
-        <div class="end-page-text"><h1>move counter: ${moves}</h1></div>
-        <div class="end-page-text"><h1>Time: ${timer.innerHTML}</h1></div>
-        <div class="end-page-text"><h1>Star rating: ${star}</h1></div>
-        <button class="re-game-btn">RE-GAME</button>
-    </div>
-    `;
+    let star = 3 - parseInt(moves/7) < 1 ? 1 : 3 - parseInt(moves/7);
+    endPage.innerHTML = 
+    `<div class="end-container">` +
+        `<img src="./img/thumb-up.png" height="200px" alt="thumb-up">` +
+        `<div class="end-page-text"><h1>move counter: ${moves}</h1></div>` +
+        `<div class="end-page-text"><h1>Time: ${timer.innerHTML}</h1></div>` +
+        `<div class="end-page-text"><h1>Star rating: ${star}</h1></div>` +
+        `<button class="re-game-btn">RE-GAME</button>` +
+    `</div>`;
     document.querySelector('.re-game-btn').addEventListener('click', reStart);
 }
 
@@ -116,13 +113,14 @@ deck.addEventListener('click', e => {
                     setTimeout(() => {
                         if (openCardsArr[0].firstElementChild.className !== openCardsArr[1].firstElementChild.className) {
                             openCardsArr.forEach(card => card.classList.remove('open', 'show'));
-                        }else {
+                        } else {
                             matchingNum ++
                             openCardsArr.forEach(card => card.classList.add('match'));
                         }
                         if (moves.innerHTML%7 === 0) {
-                            if(parseInt(moves.innerHTML/7) >= 1)
-                            stars.children[parseInt(moves.innerHTML/7)-1].style.visibility = 'hidden';
+                            if (parseInt(moves.innerHTML/7) >= 1 && parseInt(moves.innerHTML/7) < 3) {
+                                stars.children[parseInt(moves.innerHTML/7)-1].style.visibility = 'hidden';
+                            }
                         }
                         openCardsArr = [];
                         if (matchingNum === 8) {
@@ -135,7 +133,7 @@ deck.addEventListener('click', e => {
                 }
             }
         }
-    }else {
+    } else {
         alert('CLICK "GAME START" ');
     }
 });
