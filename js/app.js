@@ -37,7 +37,7 @@ let timerId;
 let time = 0;
 
 function leadingZero(num) {
-    if (num<10) {
+    if (num < 10) {
         num = '0' + num;
     }
     return num;
@@ -45,14 +45,14 @@ function leadingZero(num) {
 
 const timer = document.querySelector('.timer');
 function timeChecker() {
-    startOnOff = "on"
+    startOnOff = "on";
     let timeSec;
     let timeMin;
     timerId = setInterval(() => {
         time++
         timeMin = parseInt(time/60);
-        timeSec = leadingZero(time%60);
         timeMin = leadingZero(timeMin);
+        timeSec = leadingZero(time%60);
         timer.innerHTML = `${timeMin} : ${timeSec}`
     }, 1000);
 }
@@ -71,10 +71,12 @@ const endPage = document.querySelector('.end-page');
 function reStart() {
     container.style.display = 'flex';
     endPage.style.display = 'none';
+    startOnOff = 'off';
     repeatEventFunc();
 }
 
-function endGame(moves, star) {
+function endGame(moves) {
+    const star = 3 - parseInt(moves/7);
     endPage.innerHTML = `
     <div class="end-container">
         <img src="./img/thumb-up.png" height="200px" alt="thumb-up">
@@ -83,7 +85,7 @@ function endGame(moves, star) {
         <div class="end-page-text"><h1>Star rating: ${star}</h1></div>
         <button class="re-game-btn">RE-GAME</button>
     </div>
-    `
+    `;
     document.querySelector('.re-game-btn').addEventListener('click', reStart);
 }
 
@@ -117,14 +119,15 @@ deck.addEventListener('click', e => {
                         }else {
                             matchingNum ++
                         }
-                        if (matchingNum%7 === 0) {
-                            stars.removeChild(stars.children[0]);
+                        if (moves.innerHTML%7 === 0) {
+                            if(parseInt(moves.innerHTML/7) >= 1)
+                            stars.children[parseInt(moves.innerHTML/7)-1].style.visibility = 'hidden';
                         }
                         openCardsArr = [];
                         console.log("맞은개수",matchingNum);
                         if (matchingNum === 8) {
                             clearInterval(timerId);
-                            endGame(moves.innerHTML, stars.children.length );
+                            endGame(moves.innerHTML);
                             container.style.display = 'none';
                             endPage.style.display = 'block';
                         }
@@ -146,6 +149,12 @@ deck.addEventListener('click', e => {
 const repeat = document.querySelector('.fa-repeat');
 const allCards = document.querySelectorAll('.card');
 
+function starReset() {
+    for (let i=0; i<stars.children.length; i++) {
+        stars.children[i].style.visibility = 'visible';
+    };
+}
+
 function repeatEventFunc() {
     let classNameShuffleArr = [];
     allCards.forEach(card => {
@@ -158,6 +167,9 @@ function repeatEventFunc() {
     }
     time = 0;
     timer.innerHTML = `00 : 00`
+    matchingNum = 0;
+    moves.innerHTML = 0;
+    starReset();
 }
 
 repeat.addEventListener('click', repeatEventFunc);

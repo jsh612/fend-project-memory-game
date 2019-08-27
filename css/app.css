@@ -76,6 +76,19 @@ h1 {
     transform: rotateY(0);
     background: #02b3e4;
     cursor: default;
+    animation: shake 2s linear;
+}
+
+@keyframes shake {
+    0%, 50%{
+        transform: rotate(0deg);
+        }
+    5%, 15%, 25%, 35%, 45% {
+        transform: rotate(13deg);
+    }
+    10%, 20%, 30%, 40% {
+        transform: rotate(-13deg);
+    }
 }
 
 .deck .card.show {
