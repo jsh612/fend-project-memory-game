@@ -114,14 +114,12 @@ deck.addEventListener('click', e => {
                 if (openCardsArr.length === 2) {
                     moves.innerHTML ++
                     setTimeout(() => {
-                        openCardsArr.forEach(card => {
-                            if (openCardsArr[0].firstElementChild.className !== openCardsArr[1].firstElementChild.className) {
-                                card.classList.remove('open', 'show');
-                            }else {
-                                matchingNum ++
-                                card.classList.add('match');
-                            }
-                        });
+                        if (openCardsArr[0].firstElementChild.className !== openCardsArr[1].firstElementChild.className) {
+                            openCardsArr.forEach(card => card.classList.remove('open', 'show'));
+                        }else {
+                            matchingNum ++
+                            openCardsArr.forEach(card => card.classList.add('match'));
+                        }
                         if (moves.innerHTML%7 === 0) {
                             if(parseInt(moves.innerHTML/7) >= 1)
                             stars.children[parseInt(moves.innerHTML/7)-1].style.visibility = 'hidden';
