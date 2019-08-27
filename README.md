@@ -18,3 +18,22 @@ For specific, detailed instructions, look at the project instructions in the [Ud
 This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
 
 For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Game Details
+
+-  Goal : matching cards which have same images.
+
+- Timer : Counting time when you click "GAME START" button
+
+- Moves : Couting  your attempting to match cards 
+
+- Star : Decreasing one star every 7th moves
+
+- End : ending page's displayed when you make all cards are matched
+
+## Dependencies
+
+
+- [MDN](https://developer.mozilla.org/en-US/)
+
+- [w3schools](https://www.w3schools.com)
