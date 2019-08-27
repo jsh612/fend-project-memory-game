@@ -62,7 +62,7 @@ startButton.addEventListener('click', timeChecker);
 
 //
 //
-//end-page display
+//end-page display and event
 //
 //
 
@@ -114,17 +114,19 @@ deck.addEventListener('click', e => {
                 if (openCardsArr.length === 2) {
                     moves.innerHTML ++
                     setTimeout(() => {
-                        if (openCardsArr[0].firstElementChild.className !== openCardsArr[1].firstElementChild.className) {
-                            openCardsArr.forEach(card => card.classList.remove('open', 'show'));
-                        }else {
-                            matchingNum ++
-                        }
+                        openCardsArr.forEach(card => {
+                            if (openCardsArr[0].firstElementChild.className !== openCardsArr[1].firstElementChild.className) {
+                                card.classList.remove('open', 'show');
+                            }else {
+                                matchingNum ++
+                                card.classList.add('match');
+                            }
+                        });
                         if (moves.innerHTML%7 === 0) {
                             if(parseInt(moves.innerHTML/7) >= 1)
                             stars.children[parseInt(moves.innerHTML/7)-1].style.visibility = 'hidden';
                         }
                         openCardsArr = [];
-                        console.log("맞은개수",matchingNum);
                         if (matchingNum === 8) {
                             clearInterval(timerId);
                             endGame(moves.innerHTML);
@@ -142,7 +144,7 @@ deck.addEventListener('click', e => {
 
 //
 //
-//shuffle&repeat event
+//shuffle and repeat event
 //
 //
 
@@ -159,7 +161,7 @@ function repeatEventFunc() {
     let classNameShuffleArr = [];
     allCards.forEach(card => {
         classNameShuffleArr.push(card.firstElementChild.className);
-        card.classList.remove('open', 'show');
+        card.classList.remove('open', 'show', 'match');
     });
     classNameShuffleArr = shuffle(classNameShuffleArr);
     for (let i=0; i<allCards.length; i++) {
